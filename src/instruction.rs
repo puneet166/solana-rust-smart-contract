@@ -2,7 +2,7 @@ use solana_program::{program_error::ProgramError, pubkey::Pubkey};
 use std::convert::TryInto;
 
 #[derive(Debug)]
-pub enum RentShareInstruction {
+pub enum Instruction {
     /// Initialize the rent contract with the agreed on terms and persist initial state in the agreement account
     ///
     /// Accounts expected:
@@ -10,35 +10,30 @@ pub enum RentShareInstruction {
     /// 1. `[]` Sysvar Rent Account to validate rent exemption (SYSVAR_RENT_PUBKEY)
     InitializeEvent {
         payee_pubkey: Pubkey,
-        // payer_pubkey: Pubkey,
+        event_creator:Pubkey,
         event_id: u64,
         fix_deposit_amount_per_person: u64,
-        total_partcipator: u64,
-        // duration_unit: u8,
+        total_partcipator: u64
     },
+    CancelEvent{
+        event_creator:Pubkey,
+        event_id: u64
+
+    }
     StartEvent {
-        // payee_pubkey: Pubkey,
-        // payer_pubkey: Pubkey,
         event_id: u64,
-        // fix_deposit_amount_per_person: u64,
-        // total_partcipator: u64,
-        // duration_unit: u8,
+        event_creator:Pubkey
+
     },
     EndEvent {
-        // payee_pubkey: Pubkey,
-        // payer_pubkey: Pubkey,
         event_id: u64,
-        // fix_deposit_amount_per_person: u64,
-        // total_partcipator: u64,
-        // duration_unit: u8,
+        event_creator:Pubkey
     },
     ParticipateInEvent {
-        // payee_pubkey: Pubkey,
-        // payer_pubkey: Pubkey,
         event_id: u64,
         particpate_amount: u64,
-        // total_partcipator: u64,
-        // duration_unit: u8,
+        event_creator:Pubkey
+
     },
     /// Pay rent from payee to payer
     ///

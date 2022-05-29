@@ -6,7 +6,7 @@ use solana_program::{
 // #[derive(BorshSerialize, BorshDeserialize, Debug)]
 // pub struct InitlializeEvent{
 //     pub event_id:u64,
-//     pub event_struct:RentShareAccount
+//     pub event_struct:InitEvent
 // }
 #[derive(BorshSerialize, BorshDeserialize, Debug)]
 pub struct StartEvent{
@@ -18,7 +18,7 @@ pub struct StartEvent{
 
 /// Rent Share Account state stored in the Agreement Account
 #[derive(BorshSerialize, BorshDeserialize, Debug)]
-pub struct RentShareAccount {
+pub struct InitEvent {
     pub status: u8,
     pub payee_pubkey: Pubkey,
     // pub payer_pubkey: Pubkey,
@@ -31,22 +31,22 @@ pub struct RentShareAccount {
     // pub remaining_payments: u64,
 }
 
-impl Sealed for RentShareAccount {}
+impl Sealed for InitEvent {}
 
 
-impl IsInitialized for RentShareAccount {
+impl IsInitialized for InitEvent {
     fn is_initialized(&self) -> bool {
-        self.status != AgreementStatus::Uninitialized as u8
+        self.status != EventStatus::Uninitialized as u8
     }
 }
 
-impl RentShareAccount {
+impl InitEvent {
     pub fn is_complete(&self) -> bool {
-        self.status == AgreementStatus::Completed as u8
+        self.status == EventStatus::Completed as u8
     }
 
     pub fn is_terminated(&self) -> bool {
-        self.status == AgreementStatus::Terminated as u8
+        self.status == EventStatus::Terminated as u8
     }
 }
 
@@ -56,7 +56,7 @@ pub enum Duration {
 }
 
 #[derive(Copy, Clone)]
-pub enum AgreementStatus {
+pub enum EventStatus {
     Uninitialized = 0,
     Active,
     Completed,

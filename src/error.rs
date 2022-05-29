@@ -9,7 +9,7 @@ pub enum RentShareError {
     RentAlreadyPaidInFull = 100,
 
     /// Rent payment doesn't match amount in initial agreement
-    #[error("Rent Payment Amount Mistmatch")]
+    #[error("event creator mismatch")]
     RentPaymentAmountMismatch,
 
     /// Rent agreement already terminated
